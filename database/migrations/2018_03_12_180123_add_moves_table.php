@@ -16,7 +16,9 @@ class AddMovesTable extends Migration
         Schema::create('moves', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('game_id')->unsigned()->index();
+            $table->enum('symbol', ['X', '0']);
             $table->integer('position');
+            $table->boolean('is_computer');
             $table->timestamps();
 
             $table->foreign('game_id')
