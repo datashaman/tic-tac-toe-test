@@ -48,6 +48,11 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->singleton(
+    'hashids',
+    Hashids\Hashids::class
+);
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware

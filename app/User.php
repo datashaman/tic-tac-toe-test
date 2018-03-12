@@ -13,8 +13,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use Authenticatable, Authorizable;
 
     /**
-     * The attributes that are mass assignable.
-     *
      * @var array
      */
     protected $fillable = [
@@ -22,16 +20,29 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     /**
-     * The attributes excluded from the model's JSON form.
-     *
      * @var array
      */
     protected $hidden = [
         'password',
     ];
 
+    /**
+     * @var array
+     */
+    protected $appends = [
+        'routes',
+    ];
+
     public function games()
     {
         return $this->hasMany(Game::class);
+    }
+
+    public function getRoutesAttribute()
+    {
+        return [
+            'this' => route('user', ['name' => $this->name]),
+            'games' => route('user-games', ['name' => $this->name]),
+        ];
     }
 }
