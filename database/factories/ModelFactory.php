@@ -13,7 +13,13 @@
 
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
+        'name' => $faker->username,
         'email' => $faker->email,
+        'password' => '123456',
+    ];
+});
+
+$factory->define(App\Game::class, function (Faker\Generator $faker) {
+    return [
     ];
 });

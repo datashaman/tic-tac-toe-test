@@ -11,19 +11,23 @@
 |
 */
 
-$router->get('/games', function () {
-    $games = App\Game::all();
+$router->get('/users/{name}/games', function ($name) {
+    $user = App\User::whereName($name)->first();
 
-    if (empty($games)) {
+    if (empty($user)) {
         list($payload, $status) = [['error' => 'Not Found'], 404];
     } else {
-        list($payload, $status) = [['data' => $games], 200];
+        if (empty($user->games)) {
+            list($payload, $status) = [['error' => 'Not Found'], 404];
+        } else {
+            list($payload, $status) = [['data' => $user->games], 200];
+        }
     }
 
     return response()->json($payload, $status);
 });
 
-$router->get('/games/{hash}', function ($hash) {
+$router->get('/users/{name}/games/{hash}', function ($hash) {
     $id = $hashids->decode($hash);
     $game = App\Game::find($id);
 
